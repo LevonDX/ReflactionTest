@@ -8,19 +8,17 @@ namespace ReflactionTest
         {
             // RTTI - RunTime Type Identitfication
 
-            Type t = typeof(string);
+            Type t = typeof(Math);
 
-            string methodName = "ToLower";
+            string methodName = "Sqrt";
 
-            MethodInfo methodInfo = 
+            MethodInfo methodInfo =
                 t.GetMethods()
                 .GetMethodInfoByName(methodName);
 
-            string s = "HELLO";
+            double d = (double)methodInfo.Invoke(null, new object[] { 100 }); // Sqrt(100)
 
-            string ls = methodInfo.Invoke(s, null).ToString();
-
-            Console.WriteLine(ls);
+            Console.WriteLine(d.ToString("0.00"));
         }
     }
 }
