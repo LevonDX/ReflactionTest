@@ -6,19 +6,8 @@ namespace ReflactionTest
     {
         static void Main(string[] args)
         {
-            // RTTI - RunTime Type Identitfication
+            MathExpressionSolver solver = new MathExpressionSolver("sqrt(100)");
 
-            Type t = typeof(Math);
-
-            string methodName = "Sqrt";
-
-            MethodInfo methodInfo =
-                t.GetMethods()
-                .GetMethodInfoByName(methodName);
-
-            double d = (double)methodInfo.Invoke(null, new object[] { 100 }); // Sqrt(100)
-
-            Console.WriteLine(d.ToString("0.00"));
         }
     }
 }
