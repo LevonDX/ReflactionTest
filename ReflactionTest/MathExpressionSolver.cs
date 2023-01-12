@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,9 +60,43 @@ namespace ReflactionTest
                 argumentsArray = new string[] { arguments };
             }
 
-            object[] argumentsObjectArray = argumentsArray;
+            object[] argumentsObjectArray = new object[argumentsArray.Length];
+
+            for (int i = 0; i < argumentsArray.Length; i++)
+            {
+                argumentsObjectArray[i] = Convert.ToDouble(argumentsArray[i]);
+            }
 
             return argumentsObjectArray;
+        }
+
+        public double Calculate()
+        {
+            string methodName = this.GetMethodName();
+            object[] arguments = this.GetArguments();
+
+            Type t = typeof(Math);
+
+            MethodInfo mi = null;
+            
+            foreach (MethodInfo item in t.GetMethods())
+            {
+                if (item.Name.Equals(methodName, StringComparison.OrdinalIgnoreCase)
+                    && item.GetParameters().Length == arguments.Length)
+                {
+                    mi = item;
+                    break;
+                }
+            }
+
+            if(mi ==null)
+            {
+                throw new ArgumentException("Method not found");
+            }
+
+            double result = (double)mi.Invoke(null, arguments);
+
+            return result;
         }
     }
 }
